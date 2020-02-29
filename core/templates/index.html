@@ -1,0 +1,42 @@
+{% load static %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {# Load CSS #}
+    {% bootstrap_css %}
+
+    <title>Geek Charts</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-primary">Geek Gráficos</h1>
+    </div>
+
+    <div class="container">
+        <canvas id="grafico" width="500" height="400"></canvas>
+    </div>
+
+    <!-- Optional JavaScript -->
+    {# Load JavaScript #}
+    {% bootstrap_javascript jquery='full' %}
+    <!--O script abaixo vem da bibliteca Charts instalada-->
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+
+    <!--Utilizando Jquery Sintaxe da biblioteca Charts instalada-->
+    <script type="text/javascript">
+        $.get('{% url "dados" %}', function(data){
+            var ctx = $("#grafico").get(0).getContext("2d");
+            new Chart(ctx, {
+                type: 'line', data: data
+            });
+        });
+    </script>
+  </body>
+</html>
